@@ -1,10 +1,10 @@
 <template>
   <div class="cp-step-two">
-    <CpStepsNumber count="2" />
+    <CpStepsNumber count="3" />
 
     <CpTitle title="Senha de acesso" />
 
-    <form>
+    <form @submit.prevent="handleFormSubmit">
       <CpInput label="Sua senha" v-model="password" type="password" />
 
       <div class="cp-step-two__buttons">
@@ -16,10 +16,23 @@
 </template>
 
 <script setup>
-import CpInput from '@/components/CpInput.vue'
-import CpTitle from '@/components/CpTitle.vue'
-import CpStepsNumber from '@/components/CpStepsNumber.vue'
-import CpButton from '@/components/CpButton.vue'
+import { ref } from 'vue';
+import CpInput from '@/components/CpInput.vue';
+import CpTitle from '@/components/CpTitle.vue';
+import CpStepsNumber from '@/components/CpStepsNumber.vue';
+import CpButton from '@/components/CpButton.vue';
+
+const props = defineProps({
+  nextStep: Function
+});
+
+const password = ref('');
+
+const handleFormSubmit = () => {
+  if (!password.value) return;
+
+  props.nextStep();
+};
 </script>
 
 <style scoped>

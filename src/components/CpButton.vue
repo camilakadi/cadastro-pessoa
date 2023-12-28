@@ -1,5 +1,5 @@
 <template>
-  <button :type="buttonType" class="cp-button" :class="buttonClass" @click="handleClick">
+  <button :type="type" class="cp-button" :class="buttonClass" @click="handleClick">
     {{ text }}
   </button>
 </template>

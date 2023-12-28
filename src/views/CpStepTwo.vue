@@ -5,21 +5,21 @@
     <CpTitle title="Pessoa Física" />
 
     <form @submit.prevent="handleContinue">
-      <CpInput label="Nome" v-model="name" />
+      <CpInput label="Nome" v-model="formData.name" />
 
-      <CpInput label="CPF" v-model="cpf" />
+      <CpInput label="CPF" v-model="formData.cpf" />
 
-      <CpInput label="Data de nascimento" v-model="bornDate" />
+      <CpInput label="Data de nascimento" v-model="formData.bornDate" />
 
-      <CpInput label="Telefone" v-model="phone" />
+      <CpInput label="Telefone" v-model="formData.phone" />
 
       <div class="cp-step-two__buttons">
-        <CpButton :type="button" text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
+        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
         <CpButton
-          :type="submit"
+          type="submit"
           text="Continuar"
           buttonClass="contained"
-          :clickEvent="handleContinue"
+          :clickEvent="handleFormSubmit"
         />
       </div>
     </form>
@@ -27,16 +27,36 @@
 </template>
 
 <script setup>
-import CpInput from '@/components/CpInput.vue'
-import CpTitle from '@/components/CpTitle.vue'
-import CpStepsNumber from '@/components/CpStepsNumber.vue'
-import CpButton from '@/components/CpButton.vue'
+import { ref } from 'vue';
+import CpInput from '@/components/CpInput.vue';
+import CpTitle from '@/components/CpTitle.vue';
+import CpStepsNumber from '@/components/CpStepsNumber.vue';
+import CpButton from '@/components/CpButton.vue';
 
-const props = defineProps(['currentStep', 'nextStep', 'previousStep'])
+const props = defineProps({
+  currentStep: Number,
+  nextStep: Function,
+  previousStep: Function
+});
 
-const handleContinue = () => {
-  props.nextStep()
-}
+const formData = ref({
+  name: '',
+  cpf: '',
+  bornDate: '',
+  phone: ''
+});
+
+const handleFormSubmit = () => {
+  if (
+    !formData.value.name ||
+    !formData.value.cpf ||
+    !formData.value.bornDate ||
+    !formData.value.phone
+  )
+    return;
+
+  props.nextStep();
+};
 </script>
 
 <style scoped>

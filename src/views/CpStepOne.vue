@@ -5,7 +5,13 @@
     <CpTitle title="Seja bem vindo(a)" />
 
     <form @submit.prevent="handleFormSubmit">
-      <CpInput label="Endereço de e-mail" v-model="emailAddress" type="email" />
+      <CpInput
+        type="email"
+        label="Endereço de e-mail"
+        v-model="emailAddress"
+        for="emailAddress"
+        required
+      />
 
       <div class="cp-step-one__person-type">
         <div class="cp-step-one__type">
@@ -35,7 +41,7 @@
         class="cp-step-one__button"
         text="Continuar"
         buttonClass="contained"
-        :type="submit"
+        type="submit"
       />
     </form>
   </div>

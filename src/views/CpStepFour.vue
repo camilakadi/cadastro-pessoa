@@ -1,6 +1,6 @@
 <template>
   <div class="cp-step-four">
-    <CpStepsNumber count="2" />
+    <CpStepsNumber count="4" />
 
     <CpTitle title="Revise suas informações" />
 
@@ -26,10 +26,10 @@
 </template>
 
 <script setup>
-import CpInput from '@/components/CpInput.vue'
-import CpTitle from '@/components/CpTitle.vue'
-import CpStepsNumber from '@/components/CpStepsNumber.vue'
-import CpButton from '@/components/CpButton.vue'
+import CpInput from '@/components/CpInput.vue';
+import CpTitle from '@/components/CpTitle.vue';
+import CpStepsNumber from '@/components/CpStepsNumber.vue';
+import CpButton from '@/components/CpButton.vue';
 </script>
 
 <style scoped>
