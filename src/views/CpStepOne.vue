@@ -10,6 +10,7 @@
         label="Endereço de e-mail"
         v-model="emailAddress"
         for="emailAddress"
+        errorMessage="E-mail inválido"
         required
       />
 
