@@ -4,21 +4,57 @@
 
     <CpTitle title="Revise suas informações" />
 
-    <form>
-      <CpInput label="Endereço de e-mail" v-model="emailAddress" type="email" />
+    <form @submit.prevent="handleFormSubmit">
+      <CpInput
+        label="Endereço de e-mail"
+        v-model="formData.emailAddress"
+        type="email"
+        :error-message="errorMessages.emailAddress"
+        required
+      />
 
-      <CpInput label="Nome" v-model="name" type="text" />
+      <CpInput
+        label="Nome"
+        v-model="formData.name"
+        type="text"
+        :error-message="errorMessages.name"
+        required
+      />
 
-      <CpInput label="CPF" v-model="cpf" type="text" />
+      <CpInput
+        label="CPF"
+        v-model="formData.cpf"
+        type="text"
+        :error-message="errorMessages.cpf"
+        required
+      />
 
-      <CpInput label="Data de nascimento" v-model="bornDate" type="date" />
+      <CpInput
+        label="Data de nascimento"
+        v-model="formData.bornDate"
+        type="date"
+        :error-message="errorMessages.bornDate"
+        required
+      />
 
-      <CpInput label="Telefone" v-model="phone" type="text" />
+      <CpInput
+        label="Telefone"
+        v-model="formData.phone"
+        type="text"
+        :error-message="errorMessages.phone"
+        required
+      />
 
-      <CpInput label="Sua senha" v-model="password" type="password" />
+      <CpInput
+        label="Sua senha"
+        v-model="formData.password"
+        type="password"
+        :error-message="errorMessages.password"
+        required
+      />
 
       <div class="cp-step-four__buttons">
-        <CpButton text="Voltar" buttonClass="outlined" />
+        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
         <CpButton text="Continuar" buttonClass="contained" />
       </div>
     </form>
@@ -26,10 +62,108 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import CpInput from '@/components/CpInput.vue';
 import CpTitle from '@/components/CpTitle.vue';
 import CpStepsNumber from '@/components/CpStepsNumber.vue';
 import CpButton from '@/components/CpButton.vue';
+
+const props = defineProps({
+  nextStep: Function,
+  previousStep: Function
+});
+
+const formData = ref({
+  emailAddress: '',
+  name: '',
+  cpf: '',
+  bornDate: '',
+  phone: '',
+  password: ''
+});
+
+const errorMessages = ref({
+  emailAddress: '',
+  name: '',
+  cpf: '',
+  bornDate: '',
+  phone: '',
+  password: ''
+});
+
+const handleFormSubmit = () => {
+  const emailValid = validateEmail();
+  const nameValid = validateName();
+  const cpfValid = validateCpf();
+  const bornDateValid = validateBornDate();
+  const phoneValid = validatePhone();
+  const passwordValid = validatePassword();
+
+  if (!emailValid || !nameValid || !cpfValid || !bornDateValid || !phoneValid || !passwordValid)
+    return;
+
+  props.nextStep();
+};
+
+const validateEmail = () => {
+  if (!formData.value.emailAddress) {
+    errorMessages.value.emailAddress = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.emailAddress = '';
+  return true;
+};
+
+const validateName = () => {
+  if (!formData.value.name) {
+    errorMessages.value.name = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.name = '';
+  return true;
+};
+
+const validateCpf = () => {
+  if (!formData.value.cpf) {
+    errorMessages.value.cpf = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.cpf = '';
+  return true;
+};
+
+const validateBornDate = () => {
+  if (!formData.value.bornDate) {
+    errorMessages.value.bornDate = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.bornDate = '';
+  return true;
+};
+
+const validatePhone = () => {
+  if (!formData.value.phone) {
+    errorMessages.value.phone = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.phone = '';
+  return true;
+};
+
+const validatePassword = () => {
+  if (!formData.value.password) {
+    errorMessages.value.password = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.password = '';
+  return true;
+};
 </script>
 
 <style scoped>

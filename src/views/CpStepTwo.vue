@@ -4,23 +4,42 @@
 
     <CpTitle title="Pessoa Física" />
 
-    <form @submit.prevent="handleContinue">
-      <CpInput label="Nome" v-model="formData.name" />
+    <form @submit.prevent="handleFormSubmit">
+      <CpInput
+        label="Nome"
+        v-model="formData.name"
+        :error-message="errorMessages.name"
+        minlength="10"
+        required
+      />
 
-      <CpInput label="CPF" v-model="formData.cpf" />
+      <CpInput
+        label="CPF"
+        v-model="formData.cpf"
+        :error-message="errorMessages.cpf"
+        minlength="11"
+        required
+      />
 
-      <CpInput label="Data de nascimento" v-model="formData.bornDate" />
+      <CpInput
+        label="Data de nascimento"
+        v-model="formData.bornDate"
+        :error-message="errorMessages.bornDate"
+        minlength="3"
+        required
+      />
 
-      <CpInput label="Telefone" v-model="formData.phone" />
+      <CpInput
+        label="Telefone"
+        v-model="formData.phone"
+        :error-message="errorMessages.phone"
+        minlength="8"
+        required
+      />
 
       <div class="cp-step-two__buttons">
         <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
-        <CpButton
-          type="submit"
-          text="Continuar"
-          buttonClass="contained"
-          :clickEvent="handleFormSubmit"
-        />
+        <CpButton type="submit" text="Continuar" buttonClass="contained" />
       </div>
     </form>
   </div>
@@ -34,7 +53,6 @@ import CpStepsNumber from '@/components/CpStepsNumber.vue';
 import CpButton from '@/components/CpButton.vue';
 
 const props = defineProps({
-  currentStep: Number,
   nextStep: Function,
   previousStep: Function
 });
@@ -46,16 +64,62 @@ const formData = ref({
   phone: ''
 });
 
+const errorMessages = ref({
+  name: '',
+  cpf: '',
+  bornDate: '',
+  phone: ''
+});
+
 const handleFormSubmit = () => {
-  if (
-    !formData.value.name ||
-    !formData.value.cpf ||
-    !formData.value.bornDate ||
-    !formData.value.phone
-  )
-    return;
+  const nameValid = validateName();
+  const cpfValid = validateCpf();
+  const bornDateValid = validateBornDate();
+  const phoneValid = validatePhone();
+
+  if (!nameValid || !cpfValid || !bornDateValid || !phoneValid) return;
 
   props.nextStep();
+};
+
+const validateName = () => {
+  if (formData.value.name === '') {
+    errorMessages.value.name = 'O campo de nome é obrigatório';
+    return false;
+  }
+
+  errorMessages.value.name = '';
+  return true;
+};
+
+const validateCpf = () => {
+  if (formData.value.cpf === '') {
+    errorMessages.value.cpf = 'O campo de CPF é obrigatório';
+    return false;
+  }
+
+  errorMessages.value.cpf = '';
+  return true;
+};
+
+const validateBornDate = () => {
+  if (formData.value.bornDate === '') {
+    errorMessages.value.bornDate = 'O campo de data de nascimento é obrigatório';
+    return false;
+  }
+
+  errorMessages.value.bornDate = '';
+  return true;
+};
+
+const validatePhone = () => {
+  if (formData.value.phone === '') {
+    errorMessages.value.phone = 'O campo de telefone é obrigatório';
+    return false;
+  }
+
+  errorMessages.value.phone = '';
+  return true;
 };
 </script>
 

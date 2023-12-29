@@ -5,11 +5,16 @@
     <CpTitle title="Senha de acesso" />
 
     <form @submit.prevent="handleFormSubmit">
-      <CpInput label="Sua senha" v-model="password" type="password" />
+      <CpInput
+        label="Sua senha"
+        v-model="password"
+        type="password"
+        :error-message="errorMessages.password"
+      />
 
       <div class="cp-step-two__buttons">
-        <CpButton text="Voltar" buttonClass="outlined" />
-        <CpButton text="Continuar" buttonClass="contained" />
+        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
+        <CpButton type="submit" text="Continuar" buttonClass="contained" />
       </div>
     </form>
   </div>
@@ -23,15 +28,32 @@ import CpStepsNumber from '@/components/CpStepsNumber.vue';
 import CpButton from '@/components/CpButton.vue';
 
 const props = defineProps({
-  nextStep: Function
+  nextStep: Function,
+  previousStep: Function
 });
 
 const password = ref('');
 
+const errorMessages = ref({
+  password: ''
+});
+
 const handleFormSubmit = () => {
-  if (!password.value) return;
+  const passwordValid = validatePassword();
+
+  if (!passwordValid) return;
 
   props.nextStep();
+};
+
+const validatePassword = () => {
+  if (!password.value) {
+    errorMessages.value.password = 'Campo obrigatório';
+    return false;
+  }
+
+  errorMessages.value.password = '';
+  return true;
 };
 </script>
 
