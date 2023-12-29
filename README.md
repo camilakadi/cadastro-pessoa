@@ -1,35 +1,92 @@
-# cadastro-pf
+# Cadastro de Pessoa
 
-This template should help get you started developing with Vue 3 in Vite.
+Este é um projeto mono-repo utilizando Lerna, que organiza dois principais projetos: Backend e Frontend.
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```bash
+/cadastro-pessoa
+├── /backend
+│   ├── /node_modules
+│   ├── /src
+│   ├── package.json
+│   ├── lerna.json
+│   └── ...
+├── /frontend
+│   ├── /node_modules
+│   ├── /src
+│   ├── package.json
+│   ├── lerna.json
+│   └── ...
+├── package.json
+├── lerna.json
+└── README.md
 ```
 
-### Compile and Hot-Reload for Development
+## Mono-repo
 
-```sh
-npm run dev
+Comandos Gerais
+Iniciar Todos os Projetos:
+
+```bash
+npm start
 ```
 
-### Compile and Minify for Production
+Testar Todos os Projetos:
 
-```sh
+```bash
+npm test
+```
+
+Build de Todos os Projetos:
+
+```bash
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## Backend
 
-```sh
-npm run lint
+O Backend é uma API simples construída em Node.js.
+
+### Endpoints
+
+- `POST /registration`: Endpoint para cadastrar informações.
+- `GET /registration`: Endpoint para obter informações cadastradas.
+
+### Testes Unitários
+
+O Backend possui testes unitários implementados usando Jest.
+
+### Comandos Úteis
+
+Iniciar o Backend:
+
+```bash
+npm run start:backend
+```
+
+Testar o Backend:
+
+```bash
+npm run test:backend
+```
+
+## Frontend
+
+O Frontend é uma aplicação Vue.js (Vue 3) para o cadastro de pessoas, com suporte para Pessoa Física e Jurídica.
+
+### Testes Unitários
+
+O Frontend possui testes unitários implementados usando Jest.
+
+### Comandos Úteis
+
+Iniciar o Frontend:
+
+```bash
+npm run start:frontend
+```
+
+Testar o Frontend:
+
+```bash
+npm run test:frontend
 ```
