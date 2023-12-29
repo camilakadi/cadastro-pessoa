@@ -18,6 +18,7 @@
         v-model="formData.cnpj"
         :error-message="errorMessages.cnpj"
         minlength="11"
+        mask-pattern="##.###.###/####-##"
         required
       />
 
@@ -36,11 +37,17 @@
         type="tel"
         :error-message="errorMessages.phone"
         minlength="8"
+        mask-pattern="(##) #####-####"
         required
       />
 
       <div class="cp-step-two__buttons">
-        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
+        <CpButton
+          type="button"
+          text="Voltar"
+          buttonClass="outlined"
+          :clickEvent="handlePreviousStep"
+        />
         <CpButton type="submit" text="Continuar" buttonClass="contained" />
       </div>
     </form>
@@ -84,7 +91,11 @@ const handleFormSubmit = () => {
 
   if (!nameValid || !cnpjValid || !bornDateValid || !phoneValid) return;
 
-  props.nextStep({ ...formData.value, ...props.formAllData });
+  props.nextStep({ ...formData.value });
+};
+
+const handlePreviousStep = () => {
+  props.previousStep({ ...formData.value });
 };
 
 const validateSocialReason = () => {

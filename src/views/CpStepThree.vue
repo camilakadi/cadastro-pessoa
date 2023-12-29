@@ -13,7 +13,12 @@
       />
 
       <div class="cp-step-two__buttons">
-        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
+        <CpButton
+          type="button"
+          text="Voltar"
+          buttonClass="outlined"
+          :clickEvent="handlePreviousStep"
+        />
         <CpButton type="submit" text="Continuar" buttonClass="contained" />
       </div>
     </form>
@@ -49,6 +54,10 @@ const handleFormSubmit = () => {
   if (!passwordValid) return;
 
   props.nextStep(formData.value);
+};
+
+const handlePreviousStep = () => {
+  props.previousStep({ ...formData.value });
 };
 
 const validatePassword = () => {

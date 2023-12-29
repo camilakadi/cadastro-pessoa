@@ -7,6 +7,8 @@
       class="cp-input__input"
       v-model="inputValue"
       @input="emitInput"
+      v-maska
+      :data-maska="maskPattern"
     />
 
     <div v-show="isError" class="cp-input__message">{{ errorMessage }}</div>
@@ -14,7 +16,8 @@
 </template>
 
 <script setup>
-import { ref, defineProps, watchEffect, defineEmits } from 'vue';
+import { vMaska } from 'maska';
+import { ref, defineProps, watchEffect, defineEmits, computed } from 'vue';
 
 const props = defineProps({
   label: String,
@@ -23,7 +26,9 @@ const props = defineProps({
   id: String,
   for: String,
   required: Boolean,
-  errorMessage: String
+  minLenght: String,
+  errorMessage: String,
+  maskPattern: String
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -33,9 +38,30 @@ const inputId = ref(`input-${Math.random().toString(36).substring(7)}`);
 const isError = ref(false);
 
 const emitInput = () => {
-  isError.value = false;
+  validateInput();
   emit('update:modelValue', inputValue.value);
 };
+
+const validateInput = () => {
+  if (!props.errorMessage) {
+    return;
+  }
+
+  if (props.required && !inputValue.value) {
+    isError.value = true;
+    return;
+  }
+
+  if (props.minLenght && inputValue.value.length < props.minLenght) {
+    isError.value = true;
+    return;
+  }
+
+  isError.value = false;
+  return;
+};
+
+const maskPattern = computed(() => props.maskPattern || null);
 
 watchEffect(() => {
   inputValue.value = props.modelValue;

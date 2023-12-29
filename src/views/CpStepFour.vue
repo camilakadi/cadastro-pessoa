@@ -26,6 +26,8 @@
         v-model="formData.cpf"
         type="text"
         :error-message="errorMessages.cpf"
+        mask-pattern="###.###.###-##"
+        min-lenght="14"
         required
       />
 
@@ -42,6 +44,8 @@
         v-model="formData.phone"
         type="tel"
         :error-message="errorMessages.phone"
+        mask-pattern="(##) #####-####"
+        min-lenght="15"
         required
       />
 
@@ -54,8 +58,13 @@
       />
 
       <div class="cp-step-four__buttons">
-        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
-        <CpButton text="Cadastrar" buttonClass="contained" />
+        <CpButton
+          type="button"
+          text="Voltar"
+          buttonClass="outlined"
+          :clickEvent="handlePreviousStep"
+        />
+        <CpButton type="submit" text="Cadastrar" buttonClass="contained" />
       </div>
     </form>
   </div>
@@ -106,6 +115,10 @@ const handleFormSubmit = () => {
     return;
 
   props.nextStep();
+};
+
+const handlePreviousStep = () => {
+  props.previousStep({ ...formData.value });
 };
 
 const validateEmail = () => {

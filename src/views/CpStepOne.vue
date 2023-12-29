@@ -19,7 +19,6 @@
         v-model="formData.selectedPersonType"
         :options="personTypeOptions"
         :error-message="errorMessages.personType"
-        @change="cleanDataForm"
       />
 
       <CpButton text="Continuar" buttonClass="contained" type="submit" fullWidth />

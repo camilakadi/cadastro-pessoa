@@ -5,19 +5,14 @@
     <CpTitle title="Pessoa Física" />
 
     <form @submit.prevent="handleFormSubmit">
-      <CpInput
-        label="Nome"
-        v-model="formData.name"
-        :error-message="errorMessages.name"
-        minlength="10"
-        required
-      />
+      <CpInput label="Nome" v-model="formData.name" :error-message="errorMessages.name" required />
 
       <CpInput
         label="CPF"
         v-model="formData.cpf"
         :error-message="errorMessages.cpf"
-        minlength="11"
+        mask-pattern="###.###.###-##"
+        min-lenght="14"
         required
       />
 
@@ -25,7 +20,6 @@
         label="Data de nascimento"
         v-model="formData.bornDate"
         :error-message="errorMessages.bornDate"
-        minlength="3"
         type="date"
         required
       />
@@ -35,12 +29,18 @@
         v-model="formData.phone"
         type="tel"
         :error-message="errorMessages.phone"
-        minlength="8"
+        mask-pattern="(##) #####-####"
+        min-lenght="15"
         required
       />
 
       <div class="cp-step-two__buttons">
-        <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
+        <CpButton
+          type="button"
+          text="Voltar"
+          buttonClass="outlined"
+          :clickEvent="handlePreviousStep"
+        />
         <CpButton type="submit" text="Continuar" buttonClass="contained" />
       </div>
     </form>
@@ -84,7 +84,11 @@ const handleFormSubmit = () => {
 
   if (!nameValid || !cpfValid || !bornDateValid || !phoneValid) return;
 
-  props.nextStep({ ...formData.value, ...props.formAllData });
+  props.nextStep({ ...formData.value });
+};
+
+const handlePreviousStep = () => {
+  props.previousStep({ ...formData.value });
 };
 
 const validateName = () => {
@@ -100,6 +104,11 @@ const validateName = () => {
 const validateCpf = () => {
   if (formData.value.cpf === '') {
     errorMessages.value.cpf = 'O campo de CPF é obrigatório';
+    return false;
+  }
+
+  if (formData.value.cpf.length < 14) {
+    errorMessages.value.cpf = 'O campo de CPF deve ter 11 dígitos';
     return false;
   }
 
@@ -120,6 +129,11 @@ const validateBornDate = () => {
 const validatePhone = () => {
   if (formData.value.phone === '') {
     errorMessages.value.phone = 'O campo de telefone é obrigatório';
+    return false;
+  }
+
+  if (formData.value.phone.length < 15) {
+    errorMessages.value.phone = 'O campo de telefone deve ter 11 dígitos';
     return false;
   }
 
