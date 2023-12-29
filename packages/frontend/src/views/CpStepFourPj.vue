@@ -86,6 +86,7 @@ const props = defineProps({
 const formAllData = props.formAllData;
 
 const formData = ref({
+  personType: formAllData.selectedPersonType,
   emailAddress: formAllData.emailAddress,
   socialReason: formAllData.socialReason,
   cnpj: formAllData.cnpj,
@@ -121,7 +122,15 @@ const handleFormSubmit = () => {
   )
     return;
 
-  props.nextStep();
+  fetch('http://localhost:3000/registration', {
+    method: 'POST',
+    body: JSON.stringify(formData.value),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 };
 
 const handlePreviousStep = () => {
@@ -139,12 +148,12 @@ const validateEmail = () => {
 };
 
 const validateSocialReason = () => {
-  if (!formData.value.name) {
-    errorMessages.value.name = 'Campo obrigatório';
+  if (!formData.value.socialReason) {
+    errorMessages.value.socialReason = 'Campo obrigatório';
     return false;
   }
 
-  errorMessages.value.name = '';
+  errorMessages.value.socialReason = '';
   return true;
 };
 
