@@ -1,29 +1,22 @@
 {
-  "name": "cadastro-pf",
-  "version": "0.0.0",
+  "name": "root",
   "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "format": "prettier --write src/"
-  },
-  "dependencies": {
-    "maska": "^2.1.10",
-    "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
-  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {},
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.3.3",
-    "@vitejs/plugin-vue": "^4.5.2",
-    "@vue/eslint-config-prettier": "^8.0.0",
-    "eslint": "^8.49.0",
-    "eslint-plugin-vue": "^9.17.0",
-    "prettier": "^3.0.3",
-    "sass": "^1.69.5",
-    "sass-loader": "^10.5.1",
-    "vite": "^5.0.10"
+    "lerna": "^8.0.1"
+  },
+  "scripts": {
+    "start": "lerna run start --parallel",
+    "start:frontend": "lerna run start --scope frontend --stream",
+    "start:backend": "lerna run start --scope backend --stream",
+    "test": "lerna run test --parallel",
+    "test:frontend": "lerna run test --scope frontend --stream",
+    "test:backend": "lerna run test --scope backend --stream",
+    "build": "lerna run build --parallel",
+    "build:frontend": "lerna run build --scope frontend --stream",
+    "build:backend": "lerna run build --scope backend --stream"
   }
 }
