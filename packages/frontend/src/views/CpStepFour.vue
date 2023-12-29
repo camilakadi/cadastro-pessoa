@@ -86,6 +86,7 @@ const props = defineProps({
 const formAllData = props.formAllData;
 
 const formData = ref({
+  personType: formAllData.selectedPersonType,
   emailAddress: formAllData.emailAddress,
   name: formAllData.name,
   cpf: formAllData.cpf,
@@ -114,7 +115,15 @@ const handleFormSubmit = () => {
   if (!emailValid || !nameValid || !cpfValid || !bornDateValid || !phoneValid || !passwordValid)
     return;
 
-  props.nextStep();
+  fetch('http://localhost:3000/registration', {
+    method: 'POST',
+    body: JSON.stringify(formData.value),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8'
+    }
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
 };
 
 const handlePreviousStep = () => {
