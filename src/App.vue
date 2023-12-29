@@ -6,6 +6,7 @@
       :nextStep="handleNextStep"
       :previousStep="handlePreviousStep"
       :selectedPersonType="selectedPersonType"
+      :formAllData="formAllData"
       @updateSelectedPersonType="handleUpdateSelectedPersonType"
     />
   </div>
@@ -23,8 +24,10 @@ import CpStepFourPj from '@/views/CpStepFourPj.vue';
 
 const currentStep = ref(1);
 const selectedPersonType = ref('');
+const formAllData = ref({});
 
-const handleNextStep = () => {
+const handleNextStep = (data) => {
+  formAllData.value = { ...formAllData.value, ...data };
   currentStep.value += 1;
 };
 

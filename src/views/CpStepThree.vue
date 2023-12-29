@@ -7,7 +7,7 @@
     <form @submit.prevent="handleFormSubmit">
       <CpInput
         label="Sua senha"
-        v-model="password"
+        v-model="formData.password"
         type="password"
         :error-message="errorMessages.password"
       />
@@ -29,10 +29,15 @@ import CpButton from '@/components/CpButton.vue';
 
 const props = defineProps({
   nextStep: Function,
-  previousStep: Function
+  previousStep: Function,
+  formAllData: Object
 });
 
-const password = ref('');
+const formAllData = props.formAllData;
+
+const formData = ref({
+  password: formAllData.password
+});
 
 const errorMessages = ref({
   password: ''
@@ -43,11 +48,11 @@ const handleFormSubmit = () => {
 
   if (!passwordValid) return;
 
-  props.nextStep();
+  props.nextStep(formData.value);
 };
 
 const validatePassword = () => {
-  if (!password.value) {
+  if (!formData.value.password) {
     errorMessages.value.password = 'Campo obrigatório';
     return false;
   }

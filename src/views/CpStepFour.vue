@@ -40,7 +40,7 @@
       <CpInput
         label="Telefone"
         v-model="formData.phone"
-        type="text"
+        type="tel"
         :error-message="errorMessages.phone"
         required
       />
@@ -55,7 +55,7 @@
 
       <div class="cp-step-four__buttons">
         <CpButton text="Voltar" buttonClass="outlined" :clickEvent="previousStep" />
-        <CpButton text="Continuar" buttonClass="contained" />
+        <CpButton text="Cadastrar" buttonClass="contained" />
       </div>
     </form>
   </div>
@@ -70,16 +70,19 @@ import CpButton from '@/components/CpButton.vue';
 
 const props = defineProps({
   nextStep: Function,
-  previousStep: Function
+  previousStep: Function,
+  formAllData: Object
 });
 
+const formAllData = props.formAllData;
+
 const formData = ref({
-  emailAddress: '',
-  name: '',
-  cpf: '',
-  bornDate: '',
-  phone: '',
-  password: ''
+  emailAddress: formAllData.emailAddress,
+  name: formAllData.name,
+  cpf: formAllData.cpf,
+  bornDate: formAllData.bornDate,
+  phone: formAllData.phone,
+  password: formAllData.password
 });
 
 const errorMessages = ref({

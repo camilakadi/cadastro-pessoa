@@ -33,6 +33,7 @@
       <CpInput
         label="Telefone"
         v-model="formData.phone"
+        type="tel"
         :error-message="errorMessages.phone"
         minlength="8"
         required
@@ -55,14 +56,17 @@ import CpButton from '@/components/CpButton.vue';
 
 const props = defineProps({
   nextStep: Function,
-  previousStep: Function
+  previousStep: Function,
+  formAllData: Object
 });
 
+const formAllData = props.formAllData;
+
 const formData = ref({
-  socialReason: '',
-  cnpj: '',
-  openingDate: '',
-  phone: ''
+  socialReason: formAllData.socialReason,
+  cnpj: formAllData.cnpj,
+  openingDate: formAllData.openingDate,
+  phone: formAllData.phone
 });
 
 const errorMessages = ref({
@@ -80,7 +84,7 @@ const handleFormSubmit = () => {
 
   if (!nameValid || !cnpjValid || !bornDateValid || !phoneValid) return;
 
-  props.nextStep();
+  props.nextStep({ ...formData.value, ...props.formAllData });
 };
 
 const validateSocialReason = () => {

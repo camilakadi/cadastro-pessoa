@@ -6,6 +6,8 @@
   --black: #000000;
   --black-soft: #222222;
   --black-mute: #282828;
+  --gray-light: rgb(243 246 249);
+  --gray-shadow: #ccc;
 
   --orange: #ff9900;
   --red: #ff0000;
@@ -21,8 +23,8 @@
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
+  color: var(--black-soft);
+  background: var(--gray-light);
   transition:
     color 0.5s,
     background-color 0.5s;
@@ -40,7 +42,7 @@ body {
     'Droid Sans',
     'Helvetica Neue',
     sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
