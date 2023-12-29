@@ -2,29 +2,29 @@
   <div class="cp-step-two">
     <CpStepsNumber count="2" />
 
-    <CpTitle title="Pessoa Física" />
+    <CpTitle title="Pessoa Jurídica" />
 
     <form @submit.prevent="handleFormSubmit">
       <CpInput
-        label="Nome"
-        v-model="formData.name"
-        :error-message="errorMessages.name"
+        label="Razão social"
+        v-model="formData.socialReason"
+        :error-message="errorMessages.socialReason"
         minlength="10"
         required
       />
 
       <CpInput
-        label="CPF"
-        v-model="formData.cpf"
-        :error-message="errorMessages.cpf"
+        label="CNPJ"
+        v-model="formData.cnpj"
+        :error-message="errorMessages.cnpj"
         minlength="11"
         required
       />
 
       <CpInput
-        label="Data de nascimento"
-        v-model="formData.bornDate"
-        :error-message="errorMessages.bornDate"
+        label="Data de abertura"
+        v-model="formData.openingDate"
+        :error-message="errorMessages.openingDate"
         minlength="3"
         type="date"
         required
@@ -59,57 +59,57 @@ const props = defineProps({
 });
 
 const formData = ref({
-  name: '',
-  cpf: '',
-  bornDate: '',
+  socialReason: '',
+  cnpj: '',
+  openingDate: '',
   phone: ''
 });
 
 const errorMessages = ref({
-  name: '',
-  cpf: '',
-  bornDate: '',
+  socialReason: '',
+  cnpj: '',
+  openingDate: '',
   phone: ''
 });
 
 const handleFormSubmit = () => {
-  const nameValid = validateName();
-  const cpfValid = validateCpf();
-  const bornDateValid = validateBornDate();
+  const nameValid = validateSocialReason();
+  const cnpjValid = validateCnpj();
+  const bornDateValid = validateOpeningDate();
   const phoneValid = validatePhone();
 
-  if (!nameValid || !cpfValid || !bornDateValid || !phoneValid) return;
+  if (!nameValid || !cnpjValid || !bornDateValid || !phoneValid) return;
 
   props.nextStep();
 };
 
-const validateName = () => {
-  if (formData.value.name === '') {
-    errorMessages.value.name = 'O campo de nome é obrigatório';
+const validateSocialReason = () => {
+  if (formData.value.socialReason === '') {
+    errorMessages.value.socialReason = 'O campo de nome é obrigatório';
     return false;
   }
 
-  errorMessages.value.name = '';
+  errorMessages.value.socialReason = '';
   return true;
 };
 
-const validateCpf = () => {
-  if (formData.value.cpf === '') {
-    errorMessages.value.cpf = 'O campo de CPF é obrigatório';
+const validateCnpj = () => {
+  if (formData.value.cnpj === '') {
+    errorMessages.value.cnpj = 'O campo de CPF é obrigatório';
     return false;
   }
 
-  errorMessages.value.cpf = '';
+  errorMessages.value.cnpj = '';
   return true;
 };
 
-const validateBornDate = () => {
-  if (formData.value.bornDate === '') {
-    errorMessages.value.bornDate = 'O campo de data de nascimento é obrigatório';
+const validateOpeningDate = () => {
+  if (formData.value.openingDate === '') {
+    errorMessages.value.openingDate = 'O campo de data de abertura é obrigatório';
     return false;
   }
 
-  errorMessages.value.bornDate = '';
+  errorMessages.value.openingDate = '';
   return true;
 };
 

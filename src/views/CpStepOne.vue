@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 import CpInput from '@/components/CpInput.vue';
 import CpTitle from '@/components/CpTitle.vue';
 import CpStepsNumber from '@/components/CpStepsNumber.vue';
@@ -38,10 +38,12 @@ const props = defineProps({
   nextStep: Function
 });
 
+const emit = defineEmits(['updateSelectedPersonType']);
+
 const emailAddress = ref('');
 const selectedPersonType = ref('');
 const personTypeOptions = [
-  { id: 'physicalPerson', label: 'Pessoa física', value: 'physicalPerson' },
+  { id: 'physicalPerson', label: 'Pessoa Física', value: 'physicalPerson' },
   { id: 'legalPerson', label: 'Pessoa Jurídica', value: 'legalPerson' }
 ];
 
@@ -55,6 +57,8 @@ const handleFormSubmit = () => {
   const personTypeValid = validatePersonType();
 
   if (!emailValid || !personTypeValid) return;
+
+  emit('updateSelectedPersonType', selectedPersonType.value);
 
   props.nextStep();
 };
