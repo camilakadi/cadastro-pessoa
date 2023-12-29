@@ -1,5 +1,10 @@
 <template>
-  <button :type="type" class="cp-button" :class="buttonClass" @click="handleClick">
+  <button
+    :type="type"
+    class="cp-button"
+    :class="[buttonClass, fullWidth ? 'full-width' : '']"
+    @click="handleClick"
+  >
     {{ text }}
   </button>
 </template>
@@ -9,7 +14,8 @@ const props = defineProps({
   text: String,
   buttonClass: String,
   type: String,
-  clickEvent: Function
+  clickEvent: Function,
+  fullWidth: Boolean
 });
 
 function handleClick() {
@@ -36,5 +42,9 @@ function handleClick() {
   background-color: var(--white);
   color: var(--orange);
   border: 2px solid var(--orange);
+}
+
+.full-width {
+  width: 100%;
 }
 </style>

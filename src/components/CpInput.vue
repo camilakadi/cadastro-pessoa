@@ -3,17 +3,18 @@
     <label class="cp-input__label" :for="inputId">{{ label }}</label>
     <input
       :type="type"
+      :id="inputId"
       class="cp-input__input"
       v-model="inputValue"
       @input="emitInput"
-      :id="inputId"
     />
-    <div v-if="isError" class="cp-input__message">{{ errorMessage }}</div>
+
+    <div v-show="isError" class="cp-input__message">{{ errorMessage }}</div>
   </div>
 </template>
 
 <script setup>
-import { ref, defineProps, watch, defineEmits } from 'vue';
+import { ref, defineProps, watchEffect, defineEmits } from 'vue';
 
 const props = defineProps({
   label: String,
@@ -36,19 +37,13 @@ const emitInput = () => {
   emit('update:modelValue', inputValue.value);
 };
 
-watch(
-  () => {
-    inputValue.value = props.modelValue;
-  },
-  { immediate: true }
-);
+watchEffect(() => {
+  inputValue.value = props.modelValue;
+});
 
-watch(
-  () => {
-    isError.value = Boolean(props.errorMessage);
-  },
-  { immediate: true }
-);
+watchEffect(() => {
+  isError.value = Boolean(props.errorMessage);
+});
 </script>
 
 <style scoped>
@@ -70,12 +65,13 @@ watch(
   border-radius: 8px;
 }
 
-.cp-input--error .cp-input__input {
-  border: 2px solid var(--red);
+.cp-input__message {
+  height: 24px;
+  color: var(--red);
 }
 
-.cp-input--error .cp-input__message {
-  color: var(--red);
+.cp-input--error .cp-input__input {
+  border: 2px solid var(--red);
 }
 
 .cp-input--error .cp-input__label {

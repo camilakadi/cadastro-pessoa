@@ -10,40 +10,18 @@
         label="Endereço de e-mail"
         v-model="emailAddress"
         for="emailAddress"
-        errorMessage="E-mail inválido"
+        :error-message="errorMessages.email"
         required
       />
 
-      <div class="cp-step-one__person-type">
-        <div class="cp-step-one__type">
-          <input
-            type="radio"
-            id="physicalPerson"
-            name="physicalPerson"
-            value="physicalPerson"
-            v-model="personType"
-          />
-          <label for="physicalPerson">Pessoa física</label>
-        </div>
-
-        <div class="cp-step-one__type">
-          <input
-            type="radio"
-            id="legalPerson"
-            name="legalPerson"
-            value="legalPerson"
-            v-model="personType"
-          />
-          <label for="legalPerson">Pessoa Jurídica</label>
-        </div>
-      </div>
-
-      <CpButton
-        class="cp-step-one__button"
-        text="Continuar"
-        buttonClass="contained"
-        type="submit"
+      <CpRadio
+        type="radio"
+        v-model="selectedPersonType"
+        :options="personTypeOptions"
+        :error-message="errorMessages.personType"
       />
+
+      <CpButton text="Continuar" buttonClass="contained" type="submit" fullWidth />
     </form>
   </div>
 </template>
@@ -54,32 +32,50 @@ import CpInput from '@/components/CpInput.vue';
 import CpTitle from '@/components/CpTitle.vue';
 import CpStepsNumber from '@/components/CpStepsNumber.vue';
 import CpButton from '@/components/CpButton.vue';
+import CpRadio from '@/components/CpRadio.vue';
 
 const props = defineProps({
   nextStep: Function
 });
 
 const emailAddress = ref('');
-const personType = ref('');
+const selectedPersonType = ref('');
+const personTypeOptions = [
+  { id: 'physicalPerson', label: 'Pessoa física', value: 'physicalPerson' },
+  { id: 'legalPerson', label: 'Pessoa Jurídica', value: 'legalPerson' }
+];
+
+const errorMessages = ref({
+  email: '',
+  personType: ''
+});
 
 const handleFormSubmit = () => {
-  if (!personType.value || !emailAddress.value) return;
+  const emailValid = validateEmail();
+  const personTypeValid = validatePersonType();
+
+  if (!emailValid || !personTypeValid) return;
 
   props.nextStep();
 };
+
+const validateEmail = () => {
+  if (emailAddress.value === '') {
+    errorMessages.value.email = 'O campo de e-mail é obrigatório';
+    return false;
+  }
+
+  errorMessages.value.email = '';
+  return true;
+};
+
+const validatePersonType = () => {
+  if (selectedPersonType.value === '') {
+    errorMessages.value.personType = 'O campo de tipo de pessoa é obrigatório';
+    return false;
+  }
+
+  errorMessages.value.personType = '';
+  return true;
+};
 </script>
-
-<style scoped>
-.cp-step-one__person-type {
-  display: flex;
-  margin-bottom: 12px;
-}
-
-.cp-step-one__type {
-  margin-right: 12px;
-}
-
-.cp-step-one__button {
-  width: 100%;
-}
-</style>
