@@ -1,13 +1,13 @@
 <template>
-  <p class="cp-steps-number">
-    Etapa <span class="cp-steps-number__count">{{ count }}</span> de 4
+  <p data-testid="cp-steps-title" class="cp-steps-number">
+    Etapa <span data-testid="cp-steps-count" class="cp-steps-number__count">{{ count }}</span> de 4
   </p>
 </template>
 
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps } from 'vue';
 
-defineProps(['count'])
+defineProps(['count']);
 </script>
 
 <style scoped>

@@ -46,6 +46,10 @@ npm run build
 
 O Backend é uma API simples construída em Node.js.
 
+### Acesso ao Backend
+
+O Backend estará disponível em: http://localhost:3000
+
 ### Endpoints
 
 - `POST /registration`: Endpoint para cadastrar informações.
@@ -73,9 +77,13 @@ npm run test:backend
 
 O Frontend é uma aplicação Vue.js (Vue 3) para o cadastro de pessoas, com suporte para Pessoa Física e Jurídica.
 
+### Acesso ao Frontend
+
+O Frontend estará disponível em: http://localhost:5173
+
 ### Testes Unitários
 
-O Frontend possui testes unitários implementados usando Jest.
+O Frontend possui testes unitários implementados usando Vitest.
 
 ### Comandos Úteis
 

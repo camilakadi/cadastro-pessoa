@@ -1,7 +1,8 @@
 <template>
   <div class="cp-input" :class="{ 'cp-input--error': isError }">
-    <label class="cp-input__label" :for="inputId">{{ label }}</label>
+    <label data-testid="cp-input-label" class="cp-input__label" :for="inputId">{{ label }}</label>
     <input
+      data-testid="cp-input"
       :type="type"
       :id="inputId"
       class="cp-input__input"
@@ -11,7 +12,9 @@
       :data-maska="maskPattern"
     />
 
-    <div v-show="isError" class="cp-input__message">{{ errorMessage }}</div>
+    <div data-testid="cp-input-error" v-show="isError" class="cp-input__message">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 

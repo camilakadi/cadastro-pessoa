@@ -1,5 +1,6 @@
 <template>
   <button
+    data-testid="cp-button"
     :type="type"
     class="cp-button"
     :class="[buttonClass, fullWidth ? 'full-width' : '']"

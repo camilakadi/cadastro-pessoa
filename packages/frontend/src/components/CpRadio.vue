@@ -3,6 +3,7 @@
     <div class="cp-radio_input-container">
       <div v-for="(option, index) in options" :key="index" class="cp-radio__input">
         <input
+          :data-testid="'cp-radio-input-' + index"
           type="radio"
           :id="option.id"
           :name="option.id"
@@ -11,11 +12,13 @@
           @change="emitInput"
         />
 
-        <label :for="option.id">{{ option.label }}</label>
+        <label :data-testid="'cp-radio-label-' + index" :for="option.id">{{ option.label }}</label>
       </div>
     </div>
 
-    <div v-show="isError" class="cp-radio__message">{{ errorMessage }}</div>
+    <div data-testid="cp-radio-error-label" v-show="isError" class="cp-radio__message">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 
